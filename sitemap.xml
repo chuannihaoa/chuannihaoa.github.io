@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://chuannihaoa.github.io/archives/ce550664.html</loc>
-    
-    <lastmod>2022-10-24</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://chuannihaoa.github.io/archives/b4bd089e.html</loc>
     
     <lastmod>2022-10-24</lastmod>
@@ -21,6 +12,15 @@
   
   <url>
     <loc>https://chuannihaoa.github.io/categories/index.html</loc>
+    
+    <lastmod>2022-10-24</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://chuannihaoa.github.io/archives/ce550664.html</loc>
     
     <lastmod>2022-10-24</lastmod>
     
