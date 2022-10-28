@@ -1,0 +1,442 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>单链表的实现（c++） | Chuan Blog</title><meta name="keywords" content="单链表"><meta name="author" content="chuannihaoa"><meta name="copyright" content="chuannihaoa"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="单链表的建立">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单链表的实现（c++）">
+<meta property="og:url" content="https://chuannihaoa.github.io/archives/ac1d2ce8.html">
+<meta property="og:site_name" content="Chuan Blog">
+<meta property="og:description" content="单链表的建立">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://picsum.photos/id/1009/5000/7502">
+<meta property="article:published_time" content="2022-10-27T08:37:00.000Z">
+<meta property="article:modified_time" content="2022-10-28T05:07:12.966Z">
+<meta property="article:author" content="chuannihaoa">
+<meta property="article:tag" content="单链表">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://picsum.photos/id/1009/5000/7502"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://chuannihaoa.github.io/archives/ac1d2ce8"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><meta name="baidu-site-verification" content="code-aJmYBWt930"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":60,"position":"top","messagePrev":"该文章创建于","messageNext":"天前，请以最新的文章为准。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: chuannihaoa","link":"链接: ","source":"来源: Chuan Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '单链表的实现（c++）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-28 13:07:12'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/./image/chuan.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://picsum.photos/id/1009/5000/7502')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Chuan Blog</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);" rel="external nofollow noreferrer"><i class="fa-fw fas fa-list"></i><span> 链接</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">单链表的实现（c++）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-27T08:37:00.000Z" title="发表于 2022-10-27 16:37:00">2022-10-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-28T05:07:12.966Z" title="更新于 2022-10-28 13:07:12">2022-10-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%BA%BF%E6%80%A7%E8%A1%A8/">线性表</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="单链表的实现（c++）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="什么是单链表"><a href="#什么是单链表" class="headerlink" title="什么是单链表"></a>什么是单链表</h1><ul>
+<li>我们知道顺序表的最大的缺点是插入和删除操作可能移动大量的元素，会导致程序的执行效率很低。导致程序低效的原因就是顺序表的元素必须连续且不能有间隙，建立一个顺序表的时候需要在内存中很大一片连续空的空间进行创造。</li>
+<li>线性表的链式存储不需要使用连续的内存空间，链式存储是是通过“链”也就是指针的指向来建立各个相邻元素的关系，使其保证元素之间像一条线一样按顺序排列。<ul>
+<li>优点：我们在插入和删除元素的时候，就不需要进行大量的数据元素的迁移，只需改变修改元素的（结点）的指针的指向。</li>
+<li>缺点：结点结构比顺序表的结点结构要复杂一点。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="单链表的数据成员"><a href="#单链表的数据成员" class="headerlink" title="单链表的数据成员"></a>单链表的数据成员</h2><ul>
+<li>一个结点包含一个数据域和一个指针域（指针的内容是指向下一个结点的地址）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">	struct Node</span><br><span class="line">	&#123;</span><br><span class="line">		T data;			//数据域</span><br><span class="line">		Node&lt;T&gt;* next;	//指针域</span><br><span class="line"></span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+<hr>
+<h1 id="单链表的基本操作"><a href="#单链表的基本操作" class="headerlink" title="单链表的基本操作"></a>单链表的基本操作</h1><ul>
+<li><p>单链表的类的定义和设计</p>
+<ul>
+<li><p>构造函数</p>
+</li>
+<li><p>析构函数</p>
+</li>
+<li><p>插入元素</p>
+<ul>
+<li>在第i个位置插入元素</li>
+<li>快速在尾部插入元素</li>
+<li>在已知结点之前插入元素</li>
+</ul>
+</li>
+<li><p>删除第i个位置的元素</p>
+</li>
+<li><p>获取元素</p>
+</li>
+<li><p>按元素值查找第一次出现的位置</p>
+</li>
+<li><p>展示链表所有元素</p>
+</li>
+<li><p>获取链表的长度</p>
+</li>
+<li><p>判断链表是否为空</p>
+</li>
+<li><p>翻转链表</p>
+</li>
+<li><p>查看尾指针</p>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h1 id="单链表的编程实现"><a href="#单链表的编程实现" class="headerlink" title="单链表的编程实现"></a>单链表的编程实现</h1><h2 id="单链表类的定义"><a href="#单链表类的定义" class="headerlink" title="单链表类的定义"></a>单链表类的定义</h2><p>(这个版本是包含了尾指针的)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 定义单链表</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	class Link_List</span><br><span class="line">	&#123;</span><br><span class="line">	public:</span><br><span class="line">		Link_List();  //构造函数</span><br><span class="line">		~Link_List();	//析构函数</span><br><span class="line">	</span><br><span class="line">	public:</span><br><span class="line">	//插入操作</span><br><span class="line">		//按位置插入元素</span><br><span class="line">		bool Link_List_Insert(int i, const T&amp; e);		//在第i个位置插入元素</span><br><span class="line">		//快速在尾部插入元素</span><br><span class="line">		void Link_List_Insert_Back(const T&amp; e);</span><br><span class="line">		//在已知的结点之前插入元素</span><br><span class="line">		bool Link_List_Prior_Insert_Node(const T&amp; e, Node&lt;T&gt;*purr );	</span><br><span class="line"></span><br><span class="line">	//删除</span><br><span class="line">		bool Link_List_Delete(int i);</span><br><span class="line">		</span><br><span class="line">	//获取元素</span><br><span class="line">		T Get_Link_List_Elem(int i);		//获取第i个元素的值</span><br><span class="line">		Node&lt;T&gt;* Get_Link_List_point(int i);//获取第i个元素的指向</span><br><span class="line"></span><br><span class="line">	//按照元素值查找链表中第一次出现的位置</span><br><span class="line">		int Locate_Link_List_Elem(const T&amp; e);</span><br><span class="line"></span><br><span class="line">	// 输出链表所有的元素</span><br><span class="line">		void Display_Link_List();</span><br><span class="line"></span><br><span class="line">	//获取链表的长度</span><br><span class="line">		int Link_List_length();</span><br><span class="line"></span><br><span class="line">	//判断链表是否为空</span><br><span class="line">		bool Link_List_Empty();</span><br><span class="line"></span><br><span class="line">	// 翻转链表</span><br><span class="line">		void Reverse_Link_List();</span><br><span class="line"></span><br><span class="line">	// 查看尾指针</span><br><span class="line">		void rear();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	// 数据成员</span><br><span class="line">	private:</span><br><span class="line">		Node&lt;T&gt;* m_head;	//单链表的头指针</span><br><span class="line">		int m_length;		//单链表的实际长度</span><br><span class="line">		 Node&lt;T&gt;* m_rear ;	//单链表的尾指针</span><br><span class="line">	&#125;;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="1-构造函数（初始化）"><a href="#1-构造函数（初始化）" class="headerlink" title="1)构造函数（初始化）"></a>1)构造函数（初始化）</h2><ul>
+<li>首先会开辟一个内存存储结点，并让头指针指向它</li>
+<li>因为是第一个结点，又是链表，头结点的指针域暂时指向nullptr</li>
+<li>记录链表长度（头结点不算入）</li>
+<li>尾指针指向链表尾部，初始化指向头结点（尾指针永远指向尾部）</li>
+<li>注意事项：链表只要<strong>进行结构的变化</strong>（比如说进行删除结点，插入结点）一定要<strong>及时更新链表的长度和尾指针的指向</strong></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 构造函数定义</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	Link_List&lt;T&gt;::<span class="function"><span class="title">Link_List</span></span>()</span><br><span class="line">	&#123;</span><br><span class="line">		m_head = new Node&lt;T&gt;;		//头指针初始化并指向开辟一个内存</span><br><span class="line">		m_head-&gt;next = nullptr;		//头结点是链表的第0个结点，此时也是尾结点</span><br><span class="line">		m_length = 0;				//头结点不算入实际长度</span><br><span class="line">		m_rear = m_head;			//尾指针指向尾结点</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="2-析构函数"><a href="#2-析构函数" class="headerlink" title="2)析构函数"></a>2)析构函数</h2><ul>
+<li>对链表中每个结点都必须进行释放</li>
+<li>释放的同时，表的长度更新为0</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//析构函数进行释放</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	Link_List&lt;T&gt;::~<span class="function"><span class="title">Link_List</span></span>()</span><br><span class="line">	&#123;</span><br><span class="line">		//对链表中的每个结点都需要进行释放</span><br><span class="line">		Node&lt;T&gt;* pnode = m_head-&gt;next;	//记录下一个结点的指向</span><br><span class="line">		Node&lt;T&gt;* ptemp;					//记录释放的结点</span><br><span class="line">		<span class="keyword">while</span> (pnode != nullptr)</span><br><span class="line">		&#123;</span><br><span class="line">			ptemp = pnode;</span><br><span class="line">			pnode = pnode-&gt;next;	//更新结点</span><br><span class="line">			delete ptemp;</span><br><span class="line">		&#125;</span><br><span class="line">		delete m_head;</span><br><span class="line">		m_head = nullptr;	//非必须，建议</span><br><span class="line">		m_rear = nullptr;	//非必须，建议</span><br><span class="line">		m_length = 0;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="3-插入元素"><a href="#3-插入元素" class="headerlink" title="3)插入元素"></a>3)插入元素</h2><ul>
+<li>头部插入，尾部插入，中间元素插入均可适用  **在第i个位置插入元素 **这个版本</li>
+<li><strong>快速在尾部插入元素</strong>  与  <strong>在第i个位置插入元素</strong>的尾部插入是一样的，只是少了个形参</li>
+<li><strong>在已知的结点之前插入元素</strong>   设计这个目的是时间复杂度O（1），就不需要去遍历单链表的所有元素</li>
+<li>上述的头部插入时间复杂度为O（1）；尾部插入是因为设计了一个尾指针永远指向尾部结点，则尾部插入也是O（1）；中间插入结点 需要去遍历链表找到该位置的前一个结点，则时间复杂度为O（n）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//插入操作</span><br><span class="line">		//在第i个位置插入元素</span><br><span class="line">		bool Link_List_Insert(int i, const T&amp; e);		</span><br><span class="line">		//快速在尾部插入元素</span><br><span class="line">		void Link_List_Insert_Back(const T&amp; e);</span><br><span class="line">		//在已知的结点之前插入元素</span><br><span class="line">		bool Link_List_Prior_Insert_Node(const T&amp; e, Node&lt;T&gt;*purr );</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-在第i个位置插入元素"><a href="#4-在第i个位置插入元素" class="headerlink" title="4)在第i个位置插入元素"></a>4)在第i个位置插入元素</h3><ul>
+<li>判断位置i是否合法</li>
+<li>判断第i个位置是否为单链表尾部，是则调用  <strong>快速在尾部插入元素</strong></li>
+<li>如果i &#x3D;1相当于头插法</li>
+<li>更新表长；如果是尾部插入，在  <strong>快速在尾部插入元素</strong>  里面<strong>已经更新</strong>了尾指针的指向和单链表的表长；<strong>不是尾部插入只需要更新单链表长</strong></li>
+<li>i&#x3D; 1，时间复杂度为O（1）；尾部插入，时间复杂度为O（1）；其他位置插入的平均时间复杂度为O（n)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 在第i个位置插入元素</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	bool Link_List&lt;T&gt;::Link_List_Insert(int i ,const T&amp; e)</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (i&lt;1 || i&gt;(m_length + 1))</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;插入位置&quot;</span> &lt;&lt; <span class="string">i &lt;&lt; &quot;不合法，合法的位置是1到&quot;</span></span><br><span class="line"><span class="string">				&lt;&lt; m_length + 1 &lt;&lt; &quot;之间!&quot; &lt;&lt; endl;</span></span><br><span class="line"><span class="string">			return false;</span></span><br><span class="line"><span class="string">		&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">		//如果是要插入尾指针之后</span></span><br><span class="line"><span class="string">		//如果i</span>= 表长+1 ：代表就插入在尾处，相当于单链表的尾插法</span><br><span class="line">		<span class="keyword">if</span> (i - 1 == m_length)</span><br><span class="line">		&#123;</span><br><span class="line">			Link_List_Insert_Back( e);</span><br><span class="line">			<span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		Node&lt;T&gt;* p_curr = m_head;		//新建一个指针的目的是为指向第（i-1)的结点</span><br><span class="line"></span><br><span class="line">		//开始定位第i-1位置的结点</span><br><span class="line">		//如果i=1，直接跳过<span class="keyword">for</span>循环，在头结点下一个位置插入，相当于单链表的头插法</span><br><span class="line">		<span class="keyword">for</span> (int j = 0; j &lt; (i - 1); j++)</span><br><span class="line">		&#123;</span><br><span class="line">			p_curr = p_curr-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		Node&lt;T&gt;* node = new Node&lt;T&gt;;	//开辟一个新的内存存储要插入的结点</span><br><span class="line">		node-&gt;data = e;					//存储数据域</span><br><span class="line">		node-&gt;next = p_curr-&gt;next;		//以下两步指针域指向赋值顺序不可颠倒</span><br><span class="line">		p_curr-&gt;next = node;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;成功在位置为&quot;</span> &lt;&lt; <span class="string">i &lt;&lt; &quot;处插入元素&quot; &lt;&lt; e &lt;&lt; &quot;!&quot; &lt;&lt; endl;</span></span><br><span class="line"><span class="string">		m_length++;						//更新表长</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-快速在尾部插入元素"><a href="#5-快速在尾部插入元素" class="headerlink" title="5)快速在尾部插入元素"></a>5)快速在尾部插入元素</h3><ul>
+<li>核心步骤都是一样的</li>
+<li>时间复杂度为O（1）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">template&lt;typename T&gt;</span><br><span class="line">	void Link_List&lt;T&gt;::Link_List_Insert_Back(const T&amp; e)</span><br><span class="line">	&#123;</span><br><span class="line">		Node&lt;T&gt;* node = new Node&lt;T&gt;;		//存储新节点</span><br><span class="line">		node-&gt;data = e;</span><br><span class="line">		node-&gt;next = m_rear-&gt;next;</span><br><span class="line">		m_rear-&gt;next = node;</span><br><span class="line">		m_rear = node;						//更新尾指针</span><br><span class="line">		<span class="keyword">if</span> (m_rear-&gt;next == nullptr)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;尾部插入元素成功，更新尾指针成功&quot;</span> &lt;&lt; <span class="string">endl;</span></span><br><span class="line"><span class="string">		&#125;</span></span><br><span class="line"><span class="string">		m_length++;</span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">	&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="6-在已知结点之前插入元素"><a href="#6-在已知结点之前插入元素" class="headerlink" title="6)在已知结点之前插入元素"></a>6)在已知结点之前插入元素</h3><ul>
+<li>先判断结点是否是尾结点</li>
+<li>先将这个新结点插入到已知结点之后</li>
+<li>然后将其已知结点和新结点的数据域进行交换</li>
+<li>时间复杂度为O(1)</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//已知结点插入元素</span><br><span class="line">template&lt;typename T &gt; </span><br><span class="line">bool Link_List&lt;T&gt;::Link_List_Prior_Insert_Node(const T&amp; e, Node&lt;T&gt;* purr )</span><br><span class="line">&#123;</span><br><span class="line">	//链表末尾插入（防止已知结点是尾结点）</span><br><span class="line">	<span class="keyword">if</span> (purr-&gt;next == nullptr)</span><br><span class="line">	&#123;</span><br><span class="line">		Link_List_Insert_Back( e);</span><br><span class="line">		</span><br><span class="line">		<span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	//在purr结点之前插入新结点</span><br><span class="line">	//先将新结点插入到已知结点之后</span><br><span class="line">	Node&lt;T&gt;* node = new Node&lt;T&gt;;</span><br><span class="line">	node-&gt;data = e;</span><br><span class="line">	node-&gt;next = purr-&gt;next;</span><br><span class="line">	purr-&gt;next = node;</span><br><span class="line">	Display_Link_List();</span><br><span class="line">	//交换数据域</span><br><span class="line">	T temp = node-&gt;data;</span><br><span class="line">	node-&gt;data = purr-&gt;data;</span><br><span class="line">	purr-&gt;data = temp;</span><br><span class="line">	m_length++;</span><br><span class="line">	<span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>这个程序是便于获得某个元素的指向来作为上一个程序的形参来进行检验的</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//获得第i个位置的元素,返回指针</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	Node&lt;T&gt;* Link_List&lt;T&gt;:: Get_Link_List_point(int i)</span><br><span class="line">	&#123;</span><br><span class="line">		</span><br><span class="line"></span><br><span class="line">		Node&lt;T&gt;* p_curr = m_head;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">for</span> (int j = 0; j &lt; i; j++)</span><br><span class="line">		&#123;</span><br><span class="line">			p_curr = p_curr-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">return</span> p_curr;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-删除第i个位置的元素"><a href="#7-删除第i个位置的元素" class="headerlink" title="7)删除第i个位置的元素"></a>7)删除第i个位置的元素</h2><ul>
+<li><p>判断链表是否为空</p>
+</li>
+<li><p>判断位置i是否为链表的合法位置</p>
+</li>
+<li><p>遍历链表找第i-1个位置的元素</p>
+<ul>
+<li>如果 i &#x3D;表长，则说明删除的结点是尾结点，则需要更新尾指针，和前一个结点的指针域赋值为nullptr</li>
+</ul>
+</li>
+<li><p>更新表长</p>
+</li>
+<li><p>释放要删除的结点</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 删除操作</span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">bool Link_List&lt;T&gt;::Link_List_Delete(int i)</span><br><span class="line">&#123;</span><br><span class="line">	//判断链表是否为空</span><br><span class="line">	<span class="keyword">if</span> (m_length == 0)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;链表为空不可删除元素&quot;</span> &lt;&lt; <span class="string">endl;</span></span><br><span class="line"><span class="string">		return false;</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	//判断删除是否合法位置</span></span><br><span class="line"><span class="string">	if (i&lt;1 || i&gt;m_length)</span></span><br><span class="line"><span class="string">	&#123;</span></span><br><span class="line"><span class="string">		cout &lt;&lt; &quot;删除的位置&quot; &lt;&lt; i &lt;&lt; &quot;不合法，合法的位置是1到&quot; </span></span><br><span class="line"><span class="string">		&lt;&lt; m_length &lt;&lt; &quot;之间!&quot; &lt;&lt; endl</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	Node&lt;T&gt;* p_curr = m_head;</span><br><span class="line">	</span><br><span class="line">	//找到第（i-1）位置结点的指向</span><br><span class="line">	<span class="keyword">for</span> (int j = 0; j &lt; (i - 1); j++)</span><br><span class="line">	&#123;</span><br><span class="line">		p_curr = p_curr-&gt;next;  //指向第i-1位置</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//指针域指向操作</span><br><span class="line">	Node&lt;T&gt;* will_delete = p_curr-&gt;next;  //will_delete指向第i个位置结点</span><br><span class="line">	p_curr-&gt;next = will_delete-&gt;next;</span><br><span class="line"></span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;成功删除位置为&quot;</span> &lt;&lt; <span class="string">i &lt;&lt; &quot;的元素，该元素的值为&quot; </span></span><br><span class="line"><span class="string">	&lt;&lt; will_delete-&gt;data &lt;&lt; &quot;!&quot; &lt;&lt; endl;</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	//更新尾指针</span></span><br><span class="line"><span class="string">	if (i</span> == m_length)</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;说明删除的是尾结点,需要更新尾指针&quot;</span> &lt;&lt; <span class="string">endl;</span></span><br><span class="line"><span class="string">		m_rear = p_curr;</span></span><br><span class="line"><span class="string">		if (m_rear-&gt;next == nullptr)</span></span><br><span class="line"><span class="string">		&#123;</span></span><br><span class="line"><span class="string">			cout &lt;&lt; &quot;更新尾结点成功&quot; &lt;&lt; endl</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	m_length--;		//表长-1</span><br><span class="line">	//释放删除的结点</span><br><span class="line">	delete will_delete;</span><br><span class="line">	<span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="8-获取元素"><a href="#8-获取元素" class="headerlink" title="8)获取元素"></a>8)获取元素</h2><ul>
+<li>判断链表是否为空</li>
+<li>判断位置i是否为链表的合法位置</li>
+<li>遍历寻找</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//获得第i个位置的元素,返回值</span><br><span class="line">	template&lt;class T&gt;</span><br><span class="line">	T Link_List&lt;T&gt;::Get_Link_List_Elem(int i)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_length &lt; 1)</span><br><span class="line">		&#123;</span><br><span class="line">			cout &lt;&lt; <span class="string">&quot;当前单链表为空，不能获取任何数据!&quot;</span> &lt;&lt; <span class="string">endl;</span></span><br><span class="line"><span class="string">			return false;</span></span><br><span class="line"><span class="string">		&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">		if (i &lt; 1 || i &gt; m_length)</span></span><br><span class="line"><span class="string">		&#123;</span></span><br><span class="line"><span class="string">			cout &lt;&lt; &quot;获取元素的位置&quot; &lt;&lt; i &lt;&lt; &quot;不合法，合法的位置是1到&quot;</span></span><br><span class="line"><span class="string">			&lt;&lt; m_length &lt;&lt; &quot;之间!&quot; &lt;&lt; endl</span>;</span><br><span class="line">			<span class="built_in">return</span> <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		Node&lt;T&gt;* p_curr = m_head;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">for</span> (int j = 0; j &lt; i; j++)	//这里是i不是i-1</span><br><span class="line">		&#123;</span><br><span class="line">			p_curr = p_curr-&gt;next;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;成功获取位置为&quot;</span> &lt;&lt; <span class="string">i &lt;&lt; &quot;的元素，该元素的值为&quot; </span></span><br><span class="line"><span class="string">		&lt;&lt; p_curr-&gt;data &lt;&lt; &quot;!&quot; &lt;&lt; endl;</span></span><br><span class="line"><span class="string">		return p_curr-&gt;data;</span></span><br><span class="line"><span class="string">		</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="9-按元素值查找第一次出现的位置"><a href="#9-按元素值查找第一次出现的位置" class="headerlink" title="9)按元素值查找第一次出现的位置"></a>9)按元素值查找第一次出现的位置</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//按照元素值查找链表中第一次出现的位置</span><br><span class="line">	template&lt;class T&gt;</span><br><span class="line">	int Link_List&lt;T&gt;::Locate_Link_List_Elem(const T&amp; e)</span><br><span class="line">	&#123;</span><br><span class="line">		Node&lt;T&gt;* p_curr = m_head;</span><br><span class="line">		<span class="keyword">for</span> (int i = 1; i &lt;= m_length; i++)</span><br><span class="line">		&#123;</span><br><span class="line">			p_curr = p_curr-&gt;next;</span><br><span class="line">			<span class="keyword">if</span> (p_curr-&gt;data == e)</span><br><span class="line">			&#123;</span><br><span class="line">				cout &lt;&lt; <span class="string">&quot;值为&quot;</span> &lt;&lt; <span class="string">e &lt;&lt; &quot;的元素在单链表中第一次出现的位置为&quot; </span></span><br><span class="line"><span class="string">				&lt;&lt; i &lt;&lt; &quot;!&quot; &lt;&lt; endl;</span></span><br><span class="line"><span class="string">				return i;</span></span><br><span class="line"><span class="string">			&#125;</span></span><br><span class="line"><span class="string">			</span></span><br><span class="line"><span class="string">		&#125;</span></span><br><span class="line"><span class="string">		cout &lt;&lt; &quot;值为&quot; &lt;&lt; e</span> &lt;&lt; <span class="string">&quot;的元素在单链表中没有找到!&quot;</span> &lt;&lt; <span class="string">endl;</span></span><br><span class="line"><span class="string">		return -1;		//查找失败</span></span><br><span class="line"><span class="string">	&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-展示链表所有元素"><a href="#10-展示链表所有元素" class="headerlink" title="10)展示链表所有元素"></a>10)展示链表所有元素</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 输出链表所有的元素</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	void Link_List&lt;T&gt;::<span class="function"><span class="title">Display_Link_List</span></span>() </span><br><span class="line">	&#123;</span><br><span class="line">		Node&lt;T&gt;* p = m_head;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;单链表所有元素展示：&quot;</span> &lt;&lt; <span class="string">endl;</span></span><br><span class="line"><span class="string">		for (int i = 1; i &lt;= m_length; i++)</span></span><br><span class="line"><span class="string">		&#123;</span></span><br><span class="line"><span class="string">			p = p-&gt;next;</span></span><br><span class="line"><span class="string">			cout &lt;&lt; p-&gt;data &lt;&lt; &quot; &quot;;</span></span><br><span class="line"><span class="string">		&#125;</span></span><br><span class="line"><span class="string">		cout &lt;&lt; endl</span>;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="11-获取链表的长度"><a href="#11-获取链表的长度" class="headerlink" title="11)获取链表的长度"></a>11)获取链表的长度</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//获取链表的长度</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	int Link_List&lt;T&gt;::<span class="function"><span class="title">Link_List_length</span></span>()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">return</span> m_length;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="12-判断链表是否为空"><a href="#12-判断链表是否为空" class="headerlink" title="12)判断链表是否为空"></a>12)判断链表是否为空</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">//判断链表是否为空</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	bool Link_List&lt;T&gt;:: <span class="function"><span class="title">Link_List_Empty</span></span>()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_head-&gt;next == nullptr) //单链表为空（如果是不带头结点的单</span><br><span class="line">									//链表则用<span class="keyword">if</span>(m_head == nullptr）来判断是否为空）</span><br><span class="line">		&#123;</span><br><span class="line">			</span><br><span class="line">			<span class="built_in">return</span> <span class="literal">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot;单链表不为空&quot;</span> &lt;&lt; <span class="string">endl;</span></span><br><span class="line"><span class="string">		return false;</span></span><br><span class="line"><span class="string">	&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="13-翻转链表"><a href="#13-翻转链表" class="headerlink" title="13)翻转链表"></a>13)翻转链表</h2><p>以a0 a1 a2 a3 a4为例，其中a0为头结点</p>
+<ul>
+<li><p>判断单链表是否为空或者只有一个元素</p>
+</li>
+<li><p>将头结点和第二个结点作为一个整体（a0和a1），翻转过后a1作为最后一个元素，则a1的指针域为nullptr，尾指针也要更新为a1</p>
+</li>
+<li><p>后续只要改变的a2元素的指针域的指向（和头插法的步骤一致），同时也要更新要处理的结点也就是a3</p>
+<p><img src="https://cdn.jsdelivr.net/gh/chuannihaoa/picog/image20221028125057.png" alt="反转链表"></p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">// 翻转链表</span><br><span class="line">	template&lt;typename T&gt;</span><br><span class="line">	void Link_List&lt;T&gt;::<span class="function"><span class="title">Reverse_Link_List</span></span>()</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">if</span> (m_length &lt;= 1)</span><br><span class="line">		&#123;</span><br><span class="line">			//如果没有顺序表中没有元素或者只有一个元素，那么就不用做任何操作</span><br><span class="line">			<span class="built_in">return</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		</span><br><span class="line">		Node&lt;T&gt;* p2 = m_head-&gt;next-&gt;next;	// 获取指向第二个结点的指针域</span><br><span class="line">		m_head-&gt;next-&gt;next = nullptr;	//将第一个结点的指针域赋值为空（作为最后一个结点）</span><br><span class="line">		m_rear = m_head-&gt;next;			//更新尾指针</span><br><span class="line"></span><br><span class="line">		Node&lt;T&gt;* p_curr;</span><br><span class="line">		//只要改变第二个结点的指针域指向，便可改变顺序</span><br><span class="line">		//具体步骤和头插法一致</span><br><span class="line">		<span class="keyword">while</span> (p2 != nullptr)</span><br><span class="line">		&#123;</span><br><span class="line">			p_curr = p2;		//当前（假设a2)赋给p_curr指针进行插入操作</span><br><span class="line">			p2 = p2 -&gt; next;		//更新结点</span><br><span class="line">			 </span><br><span class="line">			p_curr-&gt;next = m_head-&gt;next;</span><br><span class="line">			m_head-&gt;next = p_curr;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="14-查看尾指针"><a href="#14-查看尾指针" class="headerlink" title="14)查看尾指针"></a>14)查看尾指针</h2><ul>
+<li>主要用于查看是否正确</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">template &lt;typename T&gt;</span><br><span class="line">	void Link_List&lt;T&gt;::<span class="function"><span class="title">rear</span></span>()</span><br><span class="line">	&#123;</span><br><span class="line">		cout &lt;&lt; <span class="string">&quot; 链表最后一个元素为&quot;</span>&lt;&lt;<span class="string">m_rear-&gt;data &lt;&lt; endl;</span></span><br><span class="line"><span class="string">	&#125;</span></span><br><span class="line"><span class="string"></span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">int <span class="function"><span class="title">main</span></span>()</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);//程序退出时检测内存泄漏并显示到“输出”窗口</span><br><span class="line">	_nmsp::Link_List&lt;int&gt; Creat_link;</span><br><span class="line">	Creat_link.Link_List_Insert(1, 1);</span><br><span class="line">	Creat_link.Link_List_Insert(2, 2);</span><br><span class="line">	Creat_link.Link_List_Insert(3, 3);</span><br><span class="line">	Creat_link.Link_List_Insert(4, 4);</span><br><span class="line">	Creat_link.Link_List_Insert(5, 5);</span><br><span class="line">	Creat_link.Display_Link_List();</span><br><span class="line"></span><br><span class="line">	Creat_link.Link_List_Insert(3, 10);</span><br><span class="line"></span><br><span class="line">	int length = Creat_link.Link_List_length();</span><br><span class="line">	cout &lt;&lt; <span class="string">&quot;单链表长度为&quot;</span> &lt;&lt; <span class="string">length &lt;&lt; endl;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	Creat_link.Display_Link_List();</span></span><br><span class="line"><span class="string">	Creat_link.rear();</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	Creat_link.Reverse_Link_List();</span></span><br><span class="line"><span class="string">	Creat_link.Display_Link_List();</span></span><br><span class="line"><span class="string">	Creat_link.rear();</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	Creat_link.Get_Link_List_Elem(3);</span></span><br><span class="line"><span class="string">	Creat_link.Link_List_Empty();</span></span><br><span class="line"><span class="string">	Creat_link.Locate_Link_List_Elem(1);</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">	Creat_link.Link_List_Delete(6);</span></span><br><span class="line"><span class="string">	Creat_link.Display_Link_List();</span></span><br><span class="line"><span class="string">	Creat_link.rear();</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string">	_nmsp::Node&lt;int&gt; * node = Creat_link.Get_Link_List_point(4);</span></span><br><span class="line"><span class="string">	Creat_link.Link_List_Prior_Insert_Node(1000, node);</span></span><br><span class="line"><span class="string">	Creat_link.Display_Link_List();</span></span><br><span class="line"><span class="string">	Creat_link.rear();</span></span><br><span class="line"><span class="string">	cout &lt;&lt; &quot;hello world&quot;;</span></span><br><span class="line"><span class="string">	return 0;</span></span><br><span class="line"><span class="string">	</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li><p>并不需要大片的连续存储空间来存放数据元素，扩容很方便</p>
+</li>
+<li><p>插入和删除结点相对于顺序表来说很方便，平均时间复杂度为O（n），如果是头部插入和尾部插入和在已知结点插入，那么时间复杂度就为O（1），这也就说明链表更适合插入，删除的频繁操作</p>
+</li>
+<li><p>存放后后继指针要额外的消耗存储空间，体现了利用空间来换时间来提高算法效率的编程思想</p>
+</li>
+<li><p>单链表也有一个很大的弊端，它的内存空间不连续，无法实现随机访问单链表中的元素，如果要访问某个结点只能从链表中第一个结点开始往下进行遍历，单链表的主要时间都花在了遍历元素的方面，平均时间复杂度为O（n).</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chuannihaoa.github.io">chuannihaoa</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chuannihaoa.github.io/archives/ac1d2ce8.html">https://chuannihaoa.github.io/archives/ac1d2ce8.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow noreferrer" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chuannihaoa.github.io" target="_blank">Chuan Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8D%95%E9%93%BE%E8%A1%A8/">单链表</a></div><div class="post_share"><div class="social-share" data-image="https://picsum.photos/id/1009/5000/7502" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/archives/b4bd089e.html"><img class="next-cover" src="https://picsum.photos/id/1009/5000/7502" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">顺序表的实现（c++）</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="lv-container" data-id="city" data-uid="MTAyMC81NzQ3Ni8zMzk0MQ=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/./image/chuan.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">chuannihaoa</div><div class="author-info__description">Welcome to Chuan blog</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">3</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">2</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>关注我</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/constown" rel="external nofollow noreferrer" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:2950441596@qq.com" rel="external nofollow noreferrer" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到川的博客</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8D%95%E9%93%BE%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">什么是单链表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98"><span class="toc-number">1.1.</span> <span class="toc-text">单链表的数据成员</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">单链表的基本操作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E7%9A%84%E7%BC%96%E7%A8%8B%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">单链表的编程实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E9%93%BE%E8%A1%A8%E7%B1%BB%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">3.1.</span> <span class="toc-text">单链表类的定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%EF%BC%88%E5%88%9D%E5%A7%8B%E5%8C%96%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">1)构造函数（初始化）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">2)析构函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0"><span class="toc-number">3.4.</span> <span class="toc-text">3)插入元素</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%9C%A8%E7%AC%ACi%E4%B8%AA%E4%BD%8D%E7%BD%AE%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0"><span class="toc-number">3.4.1.</span> <span class="toc-text">4)在第i个位置插入元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%BF%AB%E9%80%9F%E5%9C%A8%E5%B0%BE%E9%83%A8%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0"><span class="toc-number">3.4.2.</span> <span class="toc-text">5)快速在尾部插入元素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E5%9C%A8%E5%B7%B2%E7%9F%A5%E7%BB%93%E7%82%B9%E4%B9%8B%E5%89%8D%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0"><span class="toc-number">3.4.3.</span> <span class="toc-text">6)在已知结点之前插入元素</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%88%A0%E9%99%A4%E7%AC%ACi%E4%B8%AA%E4%BD%8D%E7%BD%AE%E7%9A%84%E5%85%83%E7%B4%A0"><span class="toc-number">3.5.</span> <span class="toc-text">7)删除第i个位置的元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E8%8E%B7%E5%8F%96%E5%85%83%E7%B4%A0"><span class="toc-number">3.6.</span> <span class="toc-text">8)获取元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%8C%89%E5%85%83%E7%B4%A0%E5%80%BC%E6%9F%A5%E6%89%BE%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%87%BA%E7%8E%B0%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-number">3.7.</span> <span class="toc-text">9)按元素值查找第一次出现的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%B1%95%E7%A4%BA%E9%93%BE%E8%A1%A8%E6%89%80%E6%9C%89%E5%85%83%E7%B4%A0"><span class="toc-number">3.8.</span> <span class="toc-text">10)展示链表所有元素</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E8%8E%B7%E5%8F%96%E9%93%BE%E8%A1%A8%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="toc-number">3.9.</span> <span class="toc-text">11)获取链表的长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E5%88%A4%E6%96%AD%E9%93%BE%E8%A1%A8%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA"><span class="toc-number">3.10.</span> <span class="toc-text">12)判断链表是否为空</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#13-%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8"><span class="toc-number">3.11.</span> <span class="toc-text">13)翻转链表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#14-%E6%9F%A5%E7%9C%8B%E5%B0%BE%E6%8C%87%E9%92%88"><span class="toc-number">3.12.</span> <span class="toc-text">14)查看尾指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E5%87%BD%E6%95%B0"><span class="toc-number">3.13.</span> <span class="toc-text">主函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/archives/ac1d2ce8.html" title="单链表的实现（c++）"><img src="https://picsum.photos/id/1009/5000/7502" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="单链表的实现（c++）"/></a><div class="content"><a class="title" href="/archives/ac1d2ce8.html" title="单链表的实现（c++）">单链表的实现（c++）</a><time datetime="2022-10-27T08:37:00.000Z" title="发表于 2022-10-27 16:37:00">2022-10-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/b4bd089e.html" title="顺序表的实现（c++）"><img src="https://picsum.photos/id/1009/5000/7502" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="顺序表的实现（c++）"/></a><div class="content"><a class="title" href="/archives/b4bd089e.html" title="顺序表的实现（c++）">顺序表的实现（c++）</a><time datetime="2022-10-24T01:37:00.000Z" title="发表于 2022-10-24 09:37:00">2022-10-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/archives/ce550664.html" title="搭建Github+hexo教程"><img src="https://picsum.photos/id/1009/5000/7502" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="搭建Github+hexo教程"/></a><div class="content"><a class="title" href="/archives/ce550664.html" title="搭建Github+hexo教程">搭建Github+hexo教程</a><time datetime="2022-10-19T12:27:30.000Z" title="发表于 2022-10-19 20:27:30">2022-10-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://picsum.photos/id/1009/5000/7502')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By chuannihaoa</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">很高兴认识你</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Livere' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["meta[property=\"og:image\"]","meta[property=\"og:title\"]","meta[property=\"og:url\"]","head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
